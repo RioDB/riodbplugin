@@ -20,38 +20,61 @@ under the License.
  
 */
 
+/*
+
+	An object that encodes/decodes the status of a plugin
+
+*/
+
 package org.riodb.plugin;
 
 public class RioDBPluginStatus {
 
-	private static final String[] statusMap = { 
-			"IDLE", 
-			"READY", 
-			"WARNING", 
-			"ERROR" };
+	// static final list of status
+	private static final String[] statusMap = { "IDLE", "READY", "WARNING", "ERROR" };
 
-	private static final String[] statusDesc = { 
-			"Plugin initialized, but not started.", 
-			"Plugin ready",
-			"Plugin encountered a non-fatal error", 
-			"Plugin stopped due to fatal error" };
+	// static final list of status description
+	private static final String[] statusDesc = { "Plugin initialized, but not started.", "Plugin ready",
+			"Plugin encountered a non-fatal error", "Plugin stopped due to fatal error" };
 
+	// code (array index) of THIS RioDBPluginStatus object
 	private int statusCode;
 
+	// constructor. 0-3 are allowed.
 	public RioDBPluginStatus(int statusCode) {
 		this.statusCode = statusCode;
-		if (this.statusCode > 3)
-			this.statusCode = 3;
+		if(this.statusCode < 0) {
+			this.statusCode = 0;
+		} else if(this.statusCode >= statusMap.length) {
+			this.statusCode = statusMap.length -1;
+		}
 	}
 
+	// constructor. String must exist in statusMap
+	public RioDBPluginStatus(String status) throws RioDBPluginException {
+		if (status != null) {
+			for (int i = 0; i < statusMap.length; i++) {
+				if(statusMap[i].equals(status)) {
+					this.statusCode = i;
+					break;
+				}
+			}
+		}
+		throw new RioDBPluginException(
+				"Attempted to set a plugin status to an invalid plugin status name: " + status);
+	}
+
+	// get status display name
 	public String getStatus() {
 		return statusMap[statusCode];
 	}
 
+	// get status code
 	public int getStatusCode() {
 		return statusCode;
 	}
 
+	// get status description
 	public String getStatusDesc() {
 		return statusDesc[statusCode];
 	}

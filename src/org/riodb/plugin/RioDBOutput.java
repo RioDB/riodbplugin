@@ -20,16 +20,26 @@ under the License.
  
 */
 
+/*
+
+	Interface describing what an Output plugin should be made like
+
+*/
+
 package org.riodb.plugin;
 
 public interface RioDBOutput {
-	
+
+	// get output type (or plugin name)
 	public String getType();
 
+	// initialize plugin since it can't be done in constructor
 	public void init(String outputParams, String[] columnHeaders) throws RioDBPluginException;
 
-	public void send(String[] columns);
+	// Post an array of selected columns to the output plugin
+	public void post(String[] columns);
 
+	// get the plugin status
 	public RioDBPluginStatus status();
 
 }

@@ -20,21 +20,36 @@ under the License.
  
 */
 
+/*
+
+	An interface to describe what every RioDB Data Source
+	class should be made like:
+
+*/
+
+
 package org.riodb.plugin;
 
 public interface RioDBDataSource {
 	
+	// Method for pulling next event from the data source
 	public RioDBStreamEvent getNextEvent() throws RioDBPluginException;
 
+	// method for checking the data source awaiting event queue size.
 	public int getQueueSize();
 
+	// get type (or plugin name)
 	public String getType();
 
+	// initialize the data source plugin (can't be done via constructor)
 	public void init(String dataSourceParams, RioDBStreamEventDef def) throws RioDBPluginException;
 
+	// starting the data source (most use a Runnable Thread)
 	public void start() throws RioDBPluginException;
 
+	// get status of the data source
 	public RioDBPluginStatus status();
 
+	// stop the data source (most use a Runnable thread)
 	public void stop() throws RioDBPluginException;
 }

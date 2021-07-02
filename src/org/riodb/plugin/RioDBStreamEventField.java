@@ -20,21 +20,32 @@ under the License.
  
 */
 
+/*
+ * 	Defines a steam event Field 
+ * 
+ */
+
 package org.riodb.plugin;
 
 public class RioDBStreamEventField {
+	
+	// name of the field
 	private String name;
+	// is field numeric or string
 	private boolean isNumber;
 
+	// constructor
 	public RioDBStreamEventField(String name, boolean isNumber) {
 		this.name = name;
 		this.isNumber = isNumber;
 	}
 
+	// get field name
 	public String getName() {
 		return name;
 	}
 
+	// Check if field is numeric or not
 	public boolean isNumeric() {
 		return isNumber;
 	}
