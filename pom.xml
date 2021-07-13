@@ -6,11 +6,11 @@
 
 	<groupId>org.riodb</groupId>
 	<artifactId>RioDBPlugin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>RioDBPlugin</name>
 	<description>A java class required for developing RioDB plugin jars</description>
-	<url>https://github.com/RioDB/RioDBPlugin</url>
+	<url>https://github.com/RioDB/riodbplugin</url>
 
 	<licenses>
 		<license>
@@ -29,9 +29,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/RioDB/RioDBPlugin.git</connection>
-		<developerConnection>scm:git:ssh://github.com:RioDB/RioDBPlugin.git</developerConnection>
-		<url>http://github.com/RioDB/RioDBPlugin/tree/master</url>
+		<connection>scm:git:git://github.com/RioDB/riodbplugin.git</connection>
+		<developerConnection>scm:git:git@github.com:RioDB/riodbplugin.git</developerConnection>
+		<url>https://github.com/RioDB/riodbplugin</url>
 	</scm>
 
 	<properties>
@@ -61,6 +61,7 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
@@ -96,6 +97,42 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<pushChanges>false</pushChanges>
+					<goals>deploy</goals>
+
+					<checkModificationExcludes>
+						<checkModificationExclude>pom.xml</checkModificationExclude>
+					</checkModificationExcludes>
+
+				</configuration>
+				
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+				
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
