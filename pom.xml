@@ -6,7 +6,7 @@
 
 	<groupId>org.riodb</groupId>
 	<artifactId>RioDBPlugin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>jar</packaging>
 	<name>RioDBPlugin</name>
 	<description>A java class required for developing RioDB plugin jars</description>
