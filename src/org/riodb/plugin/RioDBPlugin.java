@@ -22,18 +22,19 @@ under the License.
 
 /*
 
-	An interface to describe what every RioDB Data Source
-	class should be made like:
+	An interface to describe what every RioDBPlugin
+	class should be made like.
+	
+	www.riodb.org
 
 */
 
-
 package org.riodb.plugin;
 
-public interface RioDBDataSource {
-	
+public interface RioDBPlugin {
+
 	// Method for pulling next event from the data source
-	public RioDBStreamEvent getNextEvent() throws RioDBPluginException;
+	public RioDBStreamMessage getNextInputMessage() throws RioDBPluginException;
 
 	// method for checking the data source awaiting event queue size.
 	public int getQueueSize();
@@ -41,8 +42,14 @@ public interface RioDBDataSource {
 	// get type (or plugin name)
 	public String getType();
 
-	// initialize the data source plugin (can't be done via constructor)
-	public void init(String dataSourceParams, RioDBStreamEventDef def) throws RioDBPluginException;
+	// initialize plugin to be used as INPUT stream
+	public void initInput(String inputParams, RioDBStreamMessageDef def) throws RioDBPluginException;
+
+	// initialize plugin to be used as query OUTPUT
+	public void initOutput(String outputParams, String[] columnHeaders) throws RioDBPluginException;
+
+	// Send output using an array of selected columns
+	public void sendOutput(String[] columns);
 
 	// starting the data source (most use a Runnable Thread)
 	public void start() throws RioDBPluginException;
@@ -52,4 +59,5 @@ public interface RioDBDataSource {
 
 	// stop the data source (most use a Runnable thread)
 	public void stop() throws RioDBPluginException;
+
 }

@@ -23,6 +23,8 @@ under the License.
 /*
   
    An exception class for handling Plugin exceptions
+   
+   www.riodb.org
     
  */
 package org.riodb.plugin;

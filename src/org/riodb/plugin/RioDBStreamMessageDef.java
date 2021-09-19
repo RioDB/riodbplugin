@@ -53,31 +53,33 @@ under the License.
  	The 3rd field of the stream (bid) is the 2nd element in the
  	array of numbers. 
  	 
+ 	 
+ 	www.riodb.org
   
  */
 
 package org.riodb.plugin;
 
-public class RioDBStreamEventDef {
+public class RioDBStreamMessageDef {
 
 	// an array of fields (each field has a field name, type, etc)
-	private RioDBStreamEventField fields[];
+	private RioDBStreamMessageField fields[];
 
 	// IF a numeric field is the timestamp to be used by windows,
 	// what is the element of that field
 	private int timestampNumericFieldId;
 
 	// constructor
-	public RioDBStreamEventDef() {
-		fields = new RioDBStreamEventField[0];
+	public RioDBStreamMessageDef() {
+		fields = new RioDBStreamMessageField[0];
 		setTimestampNumericFieldId(-1);
 	}
 
 	// add fields to the definition
-	public void addField(RioDBStreamEventField newField) {
+	public void addField(RioDBStreamMessageField newField) {
 
 		// expand array to fit a new field.
-		RioDBStreamEventField newFields[] = new RioDBStreamEventField[fields.length + 1];
+		RioDBStreamMessageField newFields[] = new RioDBStreamMessageField[fields.length + 1];
 		for (int i = 0; i < fields.length; i++) {
 			newFields[i] = fields[i];
 		}
@@ -90,7 +92,7 @@ public class RioDBStreamEventDef {
 
 		if (fieldName == null || fieldName.length() == 0)
 			return false;
-		for (RioDBStreamEventField f : fields) {
+		for (RioDBStreamMessageField f : fields) {
 			if (fieldName.equals(f.getName())) {
 				return true;
 			}
@@ -214,12 +216,12 @@ public class RioDBStreamEventDef {
 
 	// get the Field object by index position
 	// programmer is responsible for avoiding index out of bounds.
-	public RioDBStreamEventField getStreamField(int index) {
+	public RioDBStreamMessageField getStreamField(int index) {
 		return fields[index];
 	}
 
 	// get the array of Field[]
-	public RioDBStreamEventField[] getStreamFields() {
+	public RioDBStreamMessageField[] getStreamFields() {
 		return fields;
 	}
 

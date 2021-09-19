@@ -23,6 +23,8 @@ under the License.
 /*
 
 	An object that encodes/decodes the status of a plugin
+	
+	www.riodb.org
 
 */
 

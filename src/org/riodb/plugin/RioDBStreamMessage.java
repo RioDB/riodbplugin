@@ -20,41 +20,33 @@ under the License.
  
 */
 
+/*
+ 
+    This object stores a message split into fields. 
+    Numeric fields go into the array of double.
+    Text fields go into the array of String.
+    Timestamp fields are treated as numeric (double). 
+    
+  	The fields are split based on the definition defined
+  	in a RioDBStreamMessageDef object.
+  
+ */
+
 package org.riodb.plugin;
 
-/*
- *   riodb.co
- *   
- *   This object represents an event after split into fields. 
- *   Numeric fields go into the double array
- *   Text fields go into the String array
- *   Timestamp is treated as numeric, in the double array. 
- *   
- */
-
-/*
-  
- 	This class contains data of a stream event. 
- 	It's an array of numbers, and an array of strings. 
- 	
- 	All data fields of a stream event are stored into these 2 arrays
- 	as defined in the RioDBStreamEventDef  
-  
- */
-
-public class RioDBStreamEvent {
+public class RioDBStreamMessage {
 
 	private double doubleFields[];
 	private String stringFields[];
 
 	// constructor with explicit array sizes
-	public RioDBStreamEvent(int doubleFieldCount, int stringFieldCount) {
+	public RioDBStreamMessage(int doubleFieldCount, int stringFieldCount) {
 		doubleFields = new double[doubleFieldCount];
 		stringFields = new String[stringFieldCount];
 	}
 
 	// constructor with the definition object
-	public RioDBStreamEvent(RioDBStreamEventDef eventDef) {
+	public RioDBStreamMessage(RioDBStreamMessageDef eventDef) {
 		doubleFields = new double[eventDef.getNumericFieldCount()];
 		stringFields = new String[eventDef.getStringFieldCount()];
 	}

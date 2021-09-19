@@ -21,25 +21,34 @@ under the License.
 */
 
 /*
-
-	Interface describing what an Output plugin should be made like
-
-*/
+  	Defines a steam message Field 
+  
+ 	www.riodb.org
+  
+ */
 
 package org.riodb.plugin;
 
-public interface RioDBOutput {
+public class RioDBStreamMessageField {
+	
+	// name of the field
+	private String name;
+	// is field numeric or string
+	private boolean isNumber;
 
-	// get output type (or plugin name)
-	public String getType();
+	// constructor
+	public RioDBStreamMessageField(String name, boolean isNumber) {
+		this.name = name;
+		this.isNumber = isNumber;
+	}
 
-	// initialize plugin since it can't be done in constructor
-	public void init(String outputParams, String[] columnHeaders) throws RioDBPluginException;
+	// get field name
+	public String getName() {
+		return name;
+	}
 
-	// Post an array of selected columns to the output plugin
-	public void post(String[] columns);
-
-	// get the plugin status
-	public RioDBPluginStatus status();
-
+	// Check if field is numeric or not
+	public boolean isNumeric() {
+		return isNumber;
+	}
 }
