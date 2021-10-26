@@ -29,17 +29,18 @@ under the License.
 
 package org.riodb.plugin;
 
-public class RioDBStreamMessageField {
+public class RioDBStreamFieldDef {
 	
 	// name of the field
 	private String name;
-	// is field numeric or string
+	// Flag to indicate if field is number 
 	private boolean isNumber;
-
+	
+	
 	// constructor
-	public RioDBStreamMessageField(String name, boolean isNumber) {
+	public RioDBStreamFieldDef(String name, boolean isNumber) throws RioDBPluginException {
 		this.name = name;
-		this.isNumber = isNumber;
+		this.isNumber = isNumber;		
 	}
 
 	// get field name

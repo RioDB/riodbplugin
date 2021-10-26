@@ -63,23 +63,30 @@ package org.riodb.plugin;
 public class RioDBStreamMessageDef {
 
 	// an array of fields (each field has a field name, type, etc)
-	private RioDBStreamMessageField fields[];
+	private RioDBStreamFieldDef fields[];
 
 	// IF a numeric field is the timestamp to be used by windows,
 	// what is the element of that field
 	private int timestampNumericFieldId;
+	// If stream timestamp comes as human-readable text, then this stores the format
+	// for conversion.
+	private String timestampFormat;
+	// If stream timestamp comes as epoch, is it milliseconds or seconds?
+	private boolean timestampMillis;
 
 	// constructor
 	public RioDBStreamMessageDef() {
-		fields = new RioDBStreamMessageField[0];
-		setTimestampNumericFieldId(-1);
+		this.fields = new RioDBStreamFieldDef[0];
+		this.timestampNumericFieldId = -1;
+		this.timestampFormat = null;
+		this.timestampMillis = false;
 	}
 
 	// add fields to the definition
-	public void addField(RioDBStreamMessageField newField) {
+	public void addField(RioDBStreamFieldDef newField) {
 
 		// expand array to fit a new field.
-		RioDBStreamMessageField newFields[] = new RioDBStreamMessageField[fields.length + 1];
+		RioDBStreamFieldDef newFields[] = new RioDBStreamFieldDef[fields.length + 1];
 		for (int i = 0; i < fields.length; i++) {
 			newFields[i] = fields[i];
 		}
@@ -92,7 +99,7 @@ public class RioDBStreamMessageDef {
 
 		if (fieldName == null || fieldName.length() == 0)
 			return false;
-		for (RioDBStreamMessageField f : fields) {
+		for (RioDBStreamFieldDef f : fields) {
 			if (fieldName.equals(f.getName())) {
 				return true;
 			}
@@ -216,12 +223,12 @@ public class RioDBStreamMessageDef {
 
 	// get the Field object by index position
 	// programmer is responsible for avoiding index out of bounds.
-	public RioDBStreamMessageField getStreamField(int index) {
+	public RioDBStreamFieldDef getStreamField(int index) {
 		return fields[index];
 	}
 
 	// get the array of Field[]
-	public RioDBStreamMessageField[] getStreamFields() {
+	public RioDBStreamFieldDef[] getStreamFields() {
 		return fields;
 	}
 
@@ -237,7 +244,7 @@ public class RioDBStreamMessageDef {
 		return count;
 	}
 
-	// see getNumericFieldIndex(int). Same thing but for String fields 
+	// see getNumericFieldIndex(int). Same thing but for String fields
 	// programmer is responsible for avoiding index out of bounds.
 	public int getStringFieldIndex(int fieldId) {
 
@@ -277,6 +284,16 @@ public class RioDBStreamMessageDef {
 		return timestampNumericFieldId;
 	}
 
+	// get the timestamp text format
+	public String getTimestampFormat() {
+		return timestampFormat;
+	}
+
+	// get the timestamp text format
+	public boolean getTimestampMillis() {
+		return timestampMillis;
+	}
+
 	// check if a field is defined as number or String
 	// programmer is responsible for avoiding index out of bounds.
 	public boolean isNumeric(int fieldId) {
@@ -284,11 +301,18 @@ public class RioDBStreamMessageDef {
 	}
 
 	// set what fields should be defined as a timestamp for the events
-	public void setTimestampNumericFieldId(int timestampNumericFieldId) {
+	public void setTimestampNumericFieldId(int timestampNumericFieldId, String timestampFormat,
+			boolean timestampMillis) {
 		this.timestampNumericFieldId = timestampNumericFieldId;
+		if (timestampFormat != null) {
+			this.timestampFormat = timestampFormat;
+		}
+		if (timestampMillis) {
+			this.timestampMillis = timestampMillis;
+		}
 	}
 
-	// get count of how many fields are defined in a stream event definition. 
+	// get count of how many fields are defined in a stream event definition.
 	public int size() {
 		return fields.length;
 	}

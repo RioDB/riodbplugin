@@ -59,5 +59,8 @@ public interface RioDBPlugin {
 
 	// stop the data source (most use a Runnable thread)
 	public void stop() throws RioDBPluginException;
+	
+	// Gets plugin name and version. 
+	public String version();
 
 }
