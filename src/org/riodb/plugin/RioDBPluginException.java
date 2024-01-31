@@ -31,12 +31,12 @@ package org.riodb.plugin;
 
 public class RioDBPluginException extends Exception {
 
-	// version
-	private static final long serialVersionUID = 1L;
+    // version
+    private static final long serialVersionUID = 1L;
 
-	// super constructor
-	public RioDBPluginException(String msg) {
-		super(msg);
-	}
+    // super constructor
+    public RioDBPluginException(String msg) {
+        super(msg);
+    }
 
 }
