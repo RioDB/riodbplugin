@@ -20,36 +20,30 @@ under the License.
  
 */
 
-/*
-  	Defines a steam message Field 
-  
- 	www.riodb.org
-  
- */
-
 package org.riodb.plugin;
 
-public class RioDBStreamFieldDef {
-	
-	// name of the field
-	private String name;
-	// Flag to indicate if field is number 
-	private boolean isNumber;
-	
-	
-	// constructor
-	public RioDBStreamFieldDef(String name, boolean isNumber) throws RioDBPluginException {
-		this.name = name;
-		this.isNumber = isNumber;		
-	}
+import java.util.LinkedList;
 
-	// get field name
-	public String getName() {
-		return name;
-	}
+public interface RioDBParserPlugin {
 
-	// Check if field is numeric or not
-	public boolean isNumeric() {
-		return isNumber;
-	}
+    // clear warnings
+    public void clearWarnings();
+
+    // get plugin details (name, version, author, website)
+    public String describe();
+
+    // initializer
+    public void init(String params, int fieldCount) throws RioDBPluginException;
+
+    // Returns parsed fields of multiple records as list of arrays of strings.
+    public LinkedList<String[]> parse(String batch) throws RioDBPluginException;
+
+    // get status of the data source
+    public RioDBComponentStatus status();
+
+    // Gets plugin type
+    public String type();
+
+    // Gets plugin name and version.
+    public String version();
 }
